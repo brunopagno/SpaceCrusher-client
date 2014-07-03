@@ -15,6 +15,7 @@ public class ClientForServer : MonoBehaviour {
 
     string strMessage = "";
     string textii = "";
+    string debugue = "";
 
     void OnGUI() {
         Rect rectObj = new Rect(40, 40, 200, 400);
@@ -27,22 +28,14 @@ public class ClientForServer : MonoBehaviour {
             sendString(strMessage + "\n");
         }
         ipAddress = GUI.TextField(new Rect(40, 120, 240, 40), ipAddress);
-        textii = ipAddress;
         GUI.Label(new Rect(40, 185, 200, 40), "current ip-> " + textii);
         if (GUI.Button(new Rect(290, 120, 100, 40), "set ip")) {
             remoteEndPoint = new IPEndPoint(IPAddress.Parse(ipAddress), port);
+            client = new UdpClient();
             textii = ipAddress;
         }
-    }
 
-    void Start() {
-        print("UDPSend.init()");
-
-        remoteEndPoint = new IPEndPoint(IPAddress.Parse(ipAddress), port);
-        client = new UdpClient();
-
-        print("Sending to " + ipAddress + " : " + port);
-        print("Testing: nc -lu " + ipAddress + " : " + port);
+        GUI.Label(new Rect(40, 220, 300, 200), debugue);
     }
 
     private void sendString(string message) {
@@ -51,8 +44,10 @@ public class ClientForServer : MonoBehaviour {
             byte[] data = Encoding.UTF8.GetBytes(message);
 
             client.Send(data, data.Length, remoteEndPoint);
+            debugue = "SentData -> " + message + "\n" +
+                "Remote -> " + remoteEndPoint.Address + " port ->" + remoteEndPoint.Port;
         } catch (Exception err) {
-            print(err.ToString());
+            Debug.LogError(err.ToString());
         }
     }
 }
