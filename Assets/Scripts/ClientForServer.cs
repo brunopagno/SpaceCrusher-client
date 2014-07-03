@@ -14,6 +14,7 @@ public class ClientForServer : MonoBehaviour {
     UdpClient client;
 
     string strMessage = "";
+    string textii = "";
 
     void OnGUI() {
         Rect rectObj = new Rect(40, 40, 200, 400);
@@ -21,13 +22,16 @@ public class ClientForServer : MonoBehaviour {
         style.alignment = TextAnchor.UpperLeft;
         GUI.Box(rectObj, "# UDPSend-Data\n127.0.0.1 " + port + " #\nshell> nc -lu 127.0.0.1  " + port + " \n", style);
 
-        strMessage = GUI.TextField(new Rect(40, 80, 140, 20), strMessage);
-        if (GUI.Button(new Rect(190, 80, 40, 20), "send")) {
+        strMessage = GUI.TextField(new Rect(40, 80, 240, 40), strMessage);
+        if (GUI.Button(new Rect(290, 80, 100, 40), "send")) {
             sendString(strMessage + "\n");
         }
-        ipAddress = GUI.TextField(new Rect(40, 120, 140, 20), ipAddress);
-        if (GUI.Button(new Rect(190, 120, 40, 20), "set ip")) {
+        ipAddress = GUI.TextField(new Rect(40, 120, 240, 40), ipAddress);
+        textii = ipAddress;
+        GUI.Label(new Rect(40, 185, 200, 40), "current ip-> " + textii);
+        if (GUI.Button(new Rect(290, 120, 100, 40), "set ip")) {
             remoteEndPoint = new IPEndPoint(IPAddress.Parse(ipAddress), port);
+            textii = ipAddress;
         }
     }
 
@@ -43,7 +47,7 @@ public class ClientForServer : MonoBehaviour {
 
     private void sendString(string message) {
         try {
-            Debug.Log("OMG SENDING GODDAMNED DATA, CARALHO => " + message);
+            Debug.Log("OMG SENDING GODDAMNED DATA => " + message);
             byte[] data = Encoding.UTF8.GetBytes(message);
 
             client.Send(data, data.Length, remoteEndPoint);
