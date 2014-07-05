@@ -83,6 +83,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 927423928}
   - 114: {fileID: 927423927}
+  - 148: {fileID: 927423929}
   m_Layer: 0
   m_Name: ClientForServer
   m_TagString: Untagged
@@ -101,8 +102,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fdf6dbb8c0ce2d489f7d7d3d6528e52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ipAddress: 127.0.0.1
-  port: 3339
 --- !u!4 &927423928
 Transform:
   m_ObjectHideFlags: 0
@@ -115,6 +114,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!148 &927423929
+NetworkView:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 927423926}
+  m_Enabled: 1
+  m_StateSynchronization: 0
+  m_Observed: {fileID: 927423928}
+  m_ViewID:
+    m_ID: 1
+    m_Type: 1
 --- !u!1 &1192463015
 GameObject:
   m_ObjectHideFlags: 0

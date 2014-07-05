@@ -7,37 +7,59 @@ using System.Text;
 
 public class ClientForServer : MonoBehaviour {
 
-    public string serverIpAddress = "127.0.0.1";
-    public int serverPort = 32154;
+    private const string TYPE_NAME = "IHA-SPG0";
+    private HostData[] hostList;
 
-    public string errors = "";
+    private string inmessages = "";
 
-    void ConnectToServer() {
-        NetworkConnectionError netError = Network.Connect(serverIpAddress, serverPort);
-        errors += netError.ToString() + "\n";
+    private void RefreshHostList() {
+        MasterServer.RequestHostList(TYPE_NAME);
     }
 
-    void DisconnectFromServer() {
-        Network.Disconnect();
+    void OnMasterServerEvent(MasterServerEvent msEvent) {
+        if (msEvent == MasterServerEvent.HostListReceived) {
+            hostList = MasterServer.PollHostList();
+        }
+    }
+
+    private void JoinServer(HostData hostData) {
+        Network.Connect(hostData);
+    }
+
+    void OnFailedToConnect(NetworkConnectionError error) {
+        Debug.Log("Failed to connect -> " + error.ToString());
+    }
+
+    [RPC]
+    void RPCOut(string info) {
+        networkView.RPC("RPCIn", RPCMode.Server, "message");
+    }
+
+    [RPC]
+    void RPCIn(string info) {
+        Debug.Log("Received message -> " + info);
+        inmessages += info + "\n";
     }
 
     void OnGUI() {
-        serverIpAddress = GUI.TextField(new Rect(40, 80, 240, 40), serverIpAddress);
-        GUI.Label(new Rect(40, 150, 240, 80), errors);
-        if (Network.peerType == NetworkPeerType.Disconnected) {
-            GUILayout.Label("Disconnected");
-            if (GUILayout.Button("Connect")) {
-                ConnectToServer();
-            }
-        } else {
-            if (Network.peerType == NetworkPeerType.Connecting) {
-                GUILayout.Label("Connecting");
-            } else {
-                GUILayout.Label("Connected");
-            }
-            if (GUILayout.Button("Disconnect")) {
-                DisconnectFromServer();
+        if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts")) { 
+            RefreshHostList();
+        }
+
+        //message = GUI.TextField(new Rect(100, 100, 250, 40), message);
+        //if (GUI.Button(new Rect(360, 100, 100, 100), "Ofusca, servidor!")) {
+        //    //lala 
+        //}
+
+        if (hostList != null) {
+            for (int i = 0; i < hostList.Length; i++) {
+                if (GUI.Button(new Rect(400, 100 + (110 * i), 300, 100), hostList[i].gameName))
+                    JoinServer(hostList[i]);
             }
         }
+        if (GUILayout.Button("Make magic")) {
+            RPCOut("outoutq");
+        }
+        GUILayout.Label(inmessages);
     }
 }
