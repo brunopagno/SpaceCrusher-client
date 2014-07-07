@@ -7,15 +7,19 @@ using System.Text;
 
 public class Communication : MonoBehaviour {
 
-    public GameObject ship;
+    public Transform observedDot;
 
     private const string TYPE_NAME = "IHA-SPG0";
     private HostData[] hostList;
-
+    private float time = 0;
+    private int identifier = 0;
+    
     private enum CommState {
         DISCONNECTED, CONNECTED, STARTED
     }
     CommState commState = CommState.DISCONNECTED;
+
+    private string serializes = "asdasf";
 
     private void RefreshHostList() {
         MasterServer.RequestHostList(TYPE_NAME);
@@ -49,6 +53,14 @@ public class Communication : MonoBehaviour {
         }
     }
 
+    void Update() {
+        time += Time.deltaTime;
+        if (time > 0.25) {
+            time = 0;
+            OutMessage("" + identifier + ":pos:" + observedDot.position.x);
+        }
+    }
+
     void OnGUI() {
         if (commState == CommState.DISCONNECTED) {
             if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts")) {
@@ -57,8 +69,9 @@ public class Communication : MonoBehaviour {
 
             if (hostList != null) {
                 for (int i = 0; i < hostList.Length; i++) {
-                    if (GUI.Button(new Rect(400, 100 + (110 * i), 300, 100), hostList[i].gameName))
+                    if (GUI.Button(new Rect(400, 100 + (110 * i), 300, 100), hostList[i].gameName)) {
                         JoinServer(hostList[i]);
+                    }
                 }
             }
         } else if (commState == CommState.CONNECTED) {
@@ -66,7 +79,7 @@ public class Communication : MonoBehaviour {
                 OutMessage("start");
             }
         } else {
-            //lala =D
+            GUILayout.Label(serializes);
         }
     }
 }
