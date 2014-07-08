@@ -5,14 +5,14 @@ PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 3
   AndroidProfiler: 0
-  defaultScreenOrientation: 4
+  defaultScreenOrientation: 2
   targetDevice: 2
   targetGlesGraphics: 1
   targetResolution: 0
   accelerometerFrequency: 60
-  companyName: IHA
-  productName: spacecrushermobile
-  defaultCursor: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+  companyName: DefaultCompany
+  productName: Mobile
+  defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   defaultScreenWidth: 1024
   defaultScreenHeight: 768
@@ -64,10 +64,10 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  iPhoneBundleIdentifier: com.iha.spacecrusher
+  iPhoneBundleIdentifier: om.SpaceCrucher.Mobile
   metroEnableIndependentInputSource: 0
   metroEnableLowLatencyPresentationAPI: 0
-  productGUID: f613c4028df0f6348b9ceec7b27498f1
+  productGUID: 6d2086ebc20aa254a9ee4b9c5f722fd3
   iPhoneBundleVersion: 1.0
   AndroidBundleVersionCode: 1
   AndroidMinSdkVersion: 9
@@ -103,15 +103,9 @@ PlayerSettings:
   m_BuildTargetIcons:
   - m_BuildTarget: 
     m_Icons:
-    - m_Icon: {fileID: 10300, guid: 0000000000000000f000000000000000, type: 0}
+    - m_Icon: {fileID: 0}
       m_Size: 128
-  m_BuildTargetBatching:
-  - m_BuildTarget: Standalone
-    m_StaticBatching: 1
-    m_DynamicBatching: 1
-  - m_BuildTarget: Android
-    m_StaticBatching: 1
-    m_DynamicBatching: 1
+  m_BuildTargetBatching: []
   webPlayerTemplate: APPLICATION:Default
   m_TemplateCustomTags: {}
   XboxTitleId: 
@@ -155,7 +149,7 @@ PlayerSettings:
   flashStrippingLevel: 2
   spritePackerPolicy: 
   scriptingDefineSymbols: {}
-  metroPackageName: spacecrushermobile
+  metroPackageName: Mobile
   metroPackageLogo: 
   metroPackageLogo140: 
   metroPackageLogo180: 
@@ -165,7 +159,7 @@ PlayerSettings:
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: spacecrushermobile
+  metroApplicationDescription: Mobile
   metroTileLogo80: 
   metroTileLogo: 
   metroTileLogo140: 
