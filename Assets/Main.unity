@@ -650,8 +650,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 229373020}
-  shipRenderer: {fileID: 0}
-  elipseRenderer: {fileID: 0}
+  shipTexture: {fileID: 1872659952}
+  elipseTexture: {fileID: 1528995963}
 --- !u!1 &1799360086
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,6 +716,7 @@ MonoBehaviour:
   pressedTexture: {fileID: 2800000, guid: 94a1c87e7e61e9c479b919b15515d5b7, type: 3}
   communication: {fileID: 1680246228}
   speed: .5
+  operation: 1
 --- !u!1 &1872659951
 GameObject:
   m_ObjectHideFlags: 0
@@ -832,7 +833,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1896849661}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84842754eaa0487408fa156e3e91186d, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b93a196d3a3f124fa0f102cf79af6de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   nave: {fileID: 1528995963}
@@ -840,6 +841,7 @@ MonoBehaviour:
   pressedTexture: {fileID: 2800000, guid: 5fd888c195b69504eb3b86687fb3d6df, type: 3}
   communication: {fileID: 1680246228}
   speed: .5
+  operation: 0
 --- !u!1 &1950575698
 GameObject:
   m_ObjectHideFlags: 0

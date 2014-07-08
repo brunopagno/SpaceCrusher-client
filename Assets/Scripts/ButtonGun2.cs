@@ -9,4 +9,8 @@ public class ButtonGun2 : TouchButtonLogic {
 		communication.GetComponent<Communication>().SendPosition ("red");
 		text.text = "Red";
 	}
+
+    protected override void AtUpdateEnd() {
+        // nothing
+    }
 }

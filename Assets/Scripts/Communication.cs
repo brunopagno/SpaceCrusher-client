@@ -9,8 +9,8 @@ public class Communication : MonoBehaviour {
     public GUIText text;
     private string PID;
 
-    public SpriteRenderer shipRenderer;
-    public SpriteRenderer elipseRenderer;
+    public GUITexture shipTexture;
+    public GUITexture elipseTexture;
 
     void Awake() {
         DontDestroyOnLoad(transform.gameObject);
@@ -123,8 +123,12 @@ public class Communication : MonoBehaviour {
                 case "6":
                     color = Color.cyan; break;
             }
-            shipRenderer.color = color;
-            elipseRenderer.color = color;
+            if (shipTexture != null) {
+                shipTexture.color = color;
+            }
+            if (elipseTexture != null) {
+                elipseTexture.color = color;
+            }
         }
         m = Regex.Match(_message, "\\d:\\d*");
     }
