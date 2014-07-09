@@ -19,8 +19,8 @@ public class RightButton : TouchButtonLogic {
 
     void OnTouchStationary() {
         float x = nave.transform.position.x + (speed * Time.deltaTime);
-        if (x < 0)
-            x = 0;
+        if (x > 1)
+            x = 1;
         nave.transform.position = new Vector3(x,
                                         nave.transform.position.y,
                                         nave.transform.position.z);
