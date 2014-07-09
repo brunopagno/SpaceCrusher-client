@@ -12,7 +12,4 @@ public class ButtonGun : TouchButtonLogic {
 		text.text = this.gameObject.tag;
 	}
 
-    protected override void AtUpdateEnd() {
-        // nothing
-    }
 }

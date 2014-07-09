@@ -12,6 +12,9 @@ public class Communication : MonoBehaviour {
     public GUITexture shipTexture;
     public GUITexture elipseTexture;
 
+    private bool gameStarted = false;
+    private bool connected = false;
+
     void Awake() {
         DontDestroyOnLoad(transform.gameObject);
     }
@@ -28,6 +31,7 @@ public class Communication : MonoBehaviour {
 
     private void JoinServer(HostData hostData) {
         Network.Connect(hostData);
+        connected = true;
     }
 
     void OnFailedToConnect(NetworkConnectionError error) {
@@ -43,29 +47,43 @@ public class Communication : MonoBehaviour {
     [RPC]
     public void SendPosition(string _position) {
         string message = string.Format("{0}:{1}", PID, _position);
+        //networkView.RPC ("RPCIn", RPCMode.Server, message);
         networkView.RPC("MovePlayer", RPCMode.Server, message);
     }
+    [RPC]
+    void MovePlayer(string _message) { }
 
     [RPC]
     public void SendChangedGun(string _gun) {
         string message = string.Format("{0}:{1}", PID, _gun);
+        //networkView.RPC ("RPCIn", RPCMode.Server, message);
         networkView.RPC("ChangeGun", RPCMode.Server, message);
     }
+    [RPC]
+    void ChangeGun(string _message) { }
 
     [RPC]
-    void ChangeGun(string _message) {
+    public void SendRouletResult(string _result) {
+        string message = string.Format("{0}:{1}", PID, _result);
+        //networkView.RPC ("RPCIn", RPCMode.Server, message);
+        networkView.RPC("RouletResult", RPCMode.Server, message);
     }
-
     [RPC]
-    void MovePlayer(string _message) {
-    }
+    void RouletResult(string _message) { }
+
     #endregion
 
     #region RPC In
     [RPC]
     void RPCIn(string info) {
         ProcessMessageIn(info);
+        //text.text = info;
+        //GameObject life = GameObject.FindGameObjectWithTag("life");
+        //life.GetComponent<Life>().setLife (5);
+        //GameObject secondPlayer = GameObject.FindGameObjectWithTag("secondPlayer");
+        //secondPlayer.GetComponent<SecondPlayer>().MoveSecondPlayer(info);
         Debug.Log("Received message -> " + info);
+        //inmessages += info + "\n";
     }
 
     [RPC]
@@ -83,21 +101,68 @@ public class Communication : MonoBehaviour {
     }
 
     [RPC]
+    void SetBulletsGun2(string _message) {
+        Match m = Regex.Match(_message, "\\d*:\\d*");
+        if (m.Success) {
+            string destPID = _message.Split(':')[0];
+            if (destPID == PID) {
+                int bullets;
+                int.TryParse(_message.Split(':')[1], out bullets);
+                GameObject bulletsGun2Text = GameObject.FindGameObjectWithTag("bulletsGun2");
+                bulletsGun2Text.GetComponent<Bullets>().setBullets(bullets);
+            }
+        }
+    }
+
+    [RPC]
+    void SetBulletsGun3(string _message) {
+        Match m = Regex.Match(_message, "\\d*:\\d*");
+        if (m.Success) {
+            string destPID = _message.Split(':')[0];
+            if (destPID == PID) {
+                int bullets;
+                int.TryParse(_message.Split(':')[1], out bullets);
+                GameObject bulletsGun3Text = GameObject.FindGameObjectWithTag("bulletsGun3");
+                bulletsGun3Text.GetComponent<Bullets>().setBullets(bullets);
+            }
+        }
+    }
+
+    [RPC]
+    void SetBulletsSpecial(string _message) {
+        Match m = Regex.Match(_message, "\\d*:\\d*");
+        if (m.Success) {
+            string destPID = _message.Split(':')[0];
+            if (destPID == PID) {
+                int bullets;
+                int.TryParse(_message.Split(':')[1], out bullets);
+                GameObject bulletsSpecialText = GameObject.FindGameObjectWithTag("bulletsSpecial");
+                bulletsSpecialText.GetComponent<Bullets>().setBullets(bullets);
+            }
+        }
+    }
+
+    [RPC]
     void RPCStart(string nothing) { }
     #endregion
 
     void OnGUI() {
-        if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts")) {
-            RefreshHostList();
-        }
-        if (hostList != null) {
-            for (int i = 0; i < hostList.Length; i++) {
-                if (GUI.Button(new Rect(400, 100 + (110 * i), 300, 100), hostList[i].gameName))
-                    JoinServer(hostList[i]);
+        if (!gameStarted) {
+            if (GUI.Button(new Rect(10, 10, 250, 100), "Refresh Hosts")) {
+                RefreshHostList();
             }
-        }
-        if (GUILayout.Button("StartGame")) {
-            networkView.RPC("RPCStart", RPCMode.Server, string.Empty);
+            if (hostList != null) {
+                for (int i = 0; i < hostList.Length; i++) {
+                    if (GUI.Button(new Rect(10, 120 + (110 * i), 300, 100), hostList[i].gameName))
+                        JoinServer(hostList[i]);
+                }
+            }
+            if (connected) {
+                if (GUI.Button(new Rect(270, 10, 250, 100), "StartGame")) {
+                    networkView.RPC("RPCStart", RPCMode.Server, string.Empty);
+                    gameStarted = true;
+                }
+            }
         }
     }
 
@@ -132,4 +197,7 @@ public class Communication : MonoBehaviour {
         }
         m = Regex.Match(_message, "\\d:\\d*");
     }
+
+    //fim comunicaçao
+
 }
