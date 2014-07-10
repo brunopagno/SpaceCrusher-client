@@ -12,6 +12,11 @@ public class Communication : MonoBehaviour {
     public GUITexture shipTexture;
     public GUITexture elipseTexture;
 
+    private bool isActive;
+    public bool IsActive {
+        get { return isActive; }
+    }
+
     private bool gameStarted = false;
     private bool connected = false;
 
@@ -143,7 +148,24 @@ public class Communication : MonoBehaviour {
     }
 
     [RPC]
-    void RPCStart(string nothing) { }
+    void RPCStart(string nothing) {
+        isActive = true;
+    }
+
+    [RPC]
+    public void SyncScore(string _message) {
+        Match m = Regex.Match(_message, "\\d*:\\d*");
+        if (m.Success) {
+            string destPID = _message.Split(':')[0];
+            if (destPID == PID) {
+                int score;
+                int.TryParse(_message.Split(':')[1], out score);
+                GameObject scoreText = GameObject.FindGameObjectWithTag("score");
+                scoreText.GetComponent<Score>().SetScore(score);
+            }
+        }
+    }
+
     #endregion
 
     void OnGUI() {
