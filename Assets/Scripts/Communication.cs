@@ -37,6 +37,7 @@ public class Communication : MonoBehaviour {
     private void JoinServer(HostData hostData) {
         Network.Connect(hostData);
         connected = true;
+        isActive = true;
     }
 
     void OnFailedToConnect(NetworkConnectionError error) {
@@ -148,9 +149,7 @@ public class Communication : MonoBehaviour {
     }
 
     [RPC]
-    void RPCStart(string nothing) {
-        isActive = true;
-    }
+    void RPCStart(string nothing) { }
 
     [RPC]
     public void SyncScore(string _message) {
