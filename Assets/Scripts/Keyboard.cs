@@ -4,6 +4,8 @@ using System.Collections;
 public class Keyboard : MonoBehaviour {
 
     public float speed = 0.5f;
+    public ButtonGun gun2;
+    public ButtonGun gun3;
     public ButtonLightning lightning;
 
     void Update() {
@@ -17,10 +19,10 @@ public class Keyboard : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.Z)) {
-
+            gun2.ExecutActivate();
         }
         if (Input.GetKeyDown(KeyCode.X)) {
-
+            gun3.ExecutActivate();
         }
         if (Input.GetKeyDown(KeyCode.C)) {
             if (!lightning.GoGoGo) {

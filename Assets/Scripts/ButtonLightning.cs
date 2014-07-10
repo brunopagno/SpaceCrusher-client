@@ -14,7 +14,7 @@ public class ButtonLightning : TouchButtonLogic {
     public GameObject buttonRotate;
     public GameObject bullets;
     private float time;
-
+    
     //public GUITexture texture;
     private int turn = 1;
     private float countTime = 0.0f;
@@ -29,7 +29,7 @@ public class ButtonLightning : TouchButtonLogic {
     }
 
     void Start() {
-        bullets.GetComponent<Bullets>().setBullets(2);
+        bullets.GetComponent<Bullets>().setBullets(0);
         roulet.SetActive(false);
         buttonRotate.SetActive(false);
     }
