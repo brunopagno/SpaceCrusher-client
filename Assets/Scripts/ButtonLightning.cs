@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Threading;
 
 public class ButtonLightning : TouchButtonLogic {
 
@@ -8,7 +9,7 @@ public class ButtonLightning : TouchButtonLogic {
     public Texture2D twoSelected;
     public Texture2D threeSelected;
     public Texture2D fourSelected;
-    public float setTime = 10.0f;
+    public float setTime = 3.0f;
     public GameObject roulet;
     public GameObject communication;
     public GameObject buttonRotate;
@@ -19,9 +20,16 @@ public class ButtonLightning : TouchButtonLogic {
     private int turn = 1;
     private float countTime = 0.0f;
     private bool active = false;
-    public GUIText text;
     private int count = 1;
     public float rotateSpeed = 10;
+	private bool findNumber = false;
+	private int rouletResul;
+	private float timeToDisable = 1.0f;
+
+	public GameObject nave;
+	public GameObject nave2;
+	public GameObject leftButton;
+	public GameObject rightButton;
 
     private bool goGoGo = false;
     public bool GoGoGo {
@@ -32,6 +40,7 @@ public class ButtonLightning : TouchButtonLogic {
         bullets.GetComponent<Bullets>().setBullets(0);
         roulet.SetActive(false);
         buttonRotate.SetActive(false);
+		findNumber = false;
     }
 
     void OnTouchEnded() {
@@ -50,8 +59,21 @@ public class ButtonLightning : TouchButtonLogic {
             turn = 1;
             count = 1;
             goGoGo = true;
+			findNumber = false;
+			System.Random rnd = new System.Random();
+			rouletResul = rnd.Next(1, 5);
+			setScreenObjectsActive(false);
         }
     }
+
+	private void setScreenObjectsActive(bool _active)
+	{
+		nave.SetActive(_active);
+		nave2.SetActive(_active);
+		leftButton.SetActive(_active);
+		rightButton.SetActive(_active);
+
+	}
 
     public void RotateRoulet() {
         active = true;
@@ -60,42 +82,71 @@ public class ButtonLightning : TouchButtonLogic {
 
     void Update() {
         if (count == 4) {
-            active = false;
-            roulet.SetActive(false);
-            buttonRotate.SetActive(false);
-            goGoGo = false;
+			timeToDisable -= Time.deltaTime;
+			if(timeToDisable <= 0.0f)
+			{
+			//	Thread.Sleep(1000);
+				setScreenObjectsActive(true);
+	            active = false;
+	            roulet.SetActive(false);
+	            buttonRotate.SetActive(false);
+	            goGoGo = false;
+				timeToDisable = 1.0f;
+				communication.GetComponent<Communication>().SendChangedGun("gun1");
+			}
+			else return;
         }
         if (active) {
             //text.text = "entrou";
-            countTime += Time.deltaTime * rotateSpeed;
-            time -= Time.deltaTime * rotateSpeed;
-            if (time <= 0.0f) {
+            countTime += Time.deltaTime;
+            time -= Time.deltaTime;
+            if (findNumber) {
+				System.Random rnd = new System.Random();
+				rouletResul = rnd.Next(1, 5);
                 turn = 1;
                 time = setTime;
                 countTime = 0.0f;
                 count++;
                 active = false;
                 communication.GetComponent<Communication>().SendRouletResult(turn.ToString());
-                buttonRotate.SetActive(true);
+				if(count != 4)
+                	buttonRotate.SetActive(true);
+				findNumber = false;
             } else {
-                if (countTime >= 1.0f) {
+                if (countTime >= 0.1f) {
                     switch (turn) {
                         case 1:
                             roulet.guiTexture.texture = oneSelected;
-                            turn++;
+							if (time <= 0.0f && turn == rouletResul) {
+								findNumber = true;
+							}
+							else
+                            	turn++;
                             break;
                         case 2:
                             roulet.guiTexture.texture = twoSelected;
-                            turn++;
+							if (time <= 0.0f && turn == rouletResul) {
+								findNumber = true;
+							}
+							else
+								turn++;
                             break;
                         case 3:
                             roulet.guiTexture.texture = threeSelected;
-                            turn++;
-                            break;
+							if (time <= 0.0f && turn == rouletResul) {
+								findNumber = true;
+							}
+							else
+								turn++;
+							break;
                         case 4:
                             roulet.guiTexture.texture = fourSelected;
-                            turn = 1;
-                            break;
+							if (time <= 0.0f && turn == rouletResul) {
+								findNumber = true;
+							}
+							else
+								turn = 1;
+							break;	
                         default: break;
                     }
                     countTime = 0.0f;

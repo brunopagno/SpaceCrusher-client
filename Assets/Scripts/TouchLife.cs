@@ -1,13 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 
-public class TouchMove : MonoBehaviour {
+public class TouchLife : MonoBehaviour {
 
+	public GameObject communication;
+	public GameObject life;
 	private Vector2 startPosition;
 	bool start = false;
 	public AudioClip sound;
 	
+	public void ExecutActivate() {
+		//communication.GetComponent<Communication>().RPCOut (this.gameObject.tag);
+		if (life.GetComponent<Life>().getLife() > 1) {
+			communication.GetComponent<Communication>().SendLife();
+			audio.PlayOneShot(sound, 1.0f);
+		}
+	}
 	
 	void Update () 
 	{
@@ -25,6 +33,9 @@ public class TouchMove : MonoBehaviour {
 					startPosition = Input.GetTouch(0).position;
 					start = true;
 				}
+				if(Input.GetTouch(0).phase == TouchPhase.Ended)
+				{
+				}
 			}
 		}
 		if (start) 
@@ -34,12 +45,7 @@ public class TouchMove : MonoBehaviour {
 				Vector2 v2 = Input.GetTouch(0).position - startPosition;
 				if(Vector2.Distance(startPosition, Input.GetTouch(0).position) > Screen.height / 4)
 				{
-					audio.PlayOneShot(sound, 1.0f);
-				//	text.text = "acertou";
-				}
-				else
-				{
-				//	text.text = "errou";
+					this.ExecutActivate();
 				}
 				start = false;
 			}

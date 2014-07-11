@@ -7,6 +7,7 @@ public class Keyboard : MonoBehaviour {
     public ButtonGun gun2;
     public ButtonGun gun3;
     public ButtonLightning lightning;
+    public TouchLife life;
 
     void Update() {
         float transH = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
@@ -30,6 +31,16 @@ public class Keyboard : MonoBehaviour {
             } else {
                 lightning.RotateRoulet();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.V)) {
+            gun2.ExecuteSend();
+        }
+        if (Input.GetKeyDown(KeyCode.B)) {
+            gun3.ExecuteSend();
+        }
+        if (Input.GetKeyDown(KeyCode.N)) {
+            life.ExecutActivate();
         }
 
         GameObject commGO = GameObject.Find("Communication");

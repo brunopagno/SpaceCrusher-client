@@ -6,7 +6,6 @@ public class Communication : MonoBehaviour {
 
     private const string TYPE_NAME = "IHA-SPG0";
     private HostData[] hostList;
-    public GUIText text;
     private string PID;
 
     public GUITexture shipTexture;
@@ -77,6 +76,24 @@ public class Communication : MonoBehaviour {
     [RPC]
     void RouletResult(string _message) { }
 
+	[RPC]
+	public void SendGun(string _gun) {
+		string message = string.Format("{0}:{1}", PID, _gun);
+		networkView.RPC("PassarArminhaProAmiguinho", RPCMode.Server, message);
+	}
+	[RPC]
+	void PassarArminhaProAmiguinho(string _message) { }
+
+	[RPC]
+	public void SendLife() {
+		string message = string.Format("{0}:life", PID);
+		networkView.RPC("PassarVidaProAmiguinho", RPCMode.Server, message);
+	}
+	[RPC]
+	void PassarVidaProAmiguinho(string _message) { }
+
+
+
     #endregion
 
     #region RPC In
@@ -106,6 +123,20 @@ public class Communication : MonoBehaviour {
         }
     }
 
+	[RPC]
+	void SetLifeWithSound(string _message) {
+		Match m = Regex.Match(_message, "\\d*:\\d*");
+		if (m.Success) {
+			string destPID = _message.Split(':')[0];
+			if (destPID == PID) {
+				int life;
+				int.TryParse(_message.Split(':')[1], out life);
+				GameObject lifeText = GameObject.FindGameObjectWithTag("life");
+				lifeText.GetComponent<Life>().setLifeWithSound(life);
+			}
+		}
+	}
+
     [RPC]
     void SetBulletsGun2(string _message) {
         Match m = Regex.Match(_message, "\\d*:\\d*");
@@ -120,6 +151,21 @@ public class Communication : MonoBehaviour {
         }
     }
 
+	[RPC]
+	void SetGun2WithSound(string _message) {
+		Match m = Regex.Match(_message, "\\d*:\\d*");
+		if (m.Success) {
+			string destPID = _message.Split(':')[0];
+			if (destPID == PID) {
+				int bullets;
+				int.TryParse(_message.Split(':')[1], out bullets);
+				GameObject bulletsGun2Text = GameObject.FindGameObjectWithTag("bulletsGun2");
+				bulletsGun2Text.GetComponent<Bullets>().setBulletsWithSound(bullets);
+			}
+		}
+	}
+
+
     [RPC]
     void SetBulletsGun3(string _message) {
         Match m = Regex.Match(_message, "\\d*:\\d*");
@@ -133,6 +179,20 @@ public class Communication : MonoBehaviour {
             }
         }
     }
+
+	[RPC]
+	void SetGun3WithSound(string _message) {
+		Match m = Regex.Match(_message, "\\d*:\\d*");
+		if (m.Success) {
+			string destPID = _message.Split(':')[0];
+			if (destPID == PID) {
+				int bullets;
+				int.TryParse(_message.Split(':')[1], out bullets);
+				GameObject bulletsGun3Text = GameObject.FindGameObjectWithTag("bulletsGun3");
+				bulletsGun3Text.GetComponent<Bullets>().setBulletsWithSound(bullets);
+			}
+		}
+	}
 
     [RPC]
     void SetBulletsSpecial(string _message) {
@@ -189,11 +249,8 @@ public class Communication : MonoBehaviour {
 
     void ProcessMessageIn(string _message) {
         Match m = Regex.Match(_message, "PID:\\d*");
-        text.text = "passou aqui";
         if (m.Success) {
-            text.text = "entrou aqui";
             PID = _message.Split(':')[1];
-            text.text = PID;
             Color color = Color.white;
             switch (PID) {
                 case "1":
