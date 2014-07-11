@@ -26,11 +26,7 @@ public class Keyboard : MonoBehaviour {
             gun3.ExecutActivate();
         }
         if (Input.GetKeyDown(KeyCode.C)) {
-            if (!lightning.GoGoGo) {
-                lightning.ActiveRoulet();
-            } else {
-                lightning.RotateRoulet();
-            }
+            lightning.ActiveRoulet();
         }
 
         if (Input.GetKeyDown(KeyCode.V)) {

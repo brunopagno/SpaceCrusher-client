@@ -37,7 +37,7 @@ public class ButtonLightning : TouchButtonLogic {
     }
 
     void Start() {
-        bullets.GetComponent<Bullets>().setBullets(0);
+        bullets.GetComponent<Bullets>().setBullets(1);
         roulet.SetActive(false);
         buttonRotate.SetActive(false);
 		findNumber = false;
@@ -81,6 +81,11 @@ public class ButtonLightning : TouchButtonLogic {
     }
 
     void Update() {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            if (goGoGo) {
+                RotateRoulet();
+            }
+        }
         if (count == 4) {
 			timeToDisable -= Time.deltaTime;
 			if(timeToDisable <= 0.0f)
