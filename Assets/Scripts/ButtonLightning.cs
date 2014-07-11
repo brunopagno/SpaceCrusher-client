@@ -108,7 +108,6 @@ public class ButtonLightning : TouchButtonLogic {
             if (findNumber) {
 				System.Random rnd = new System.Random();
 				rouletResul = rnd.Next(1, 5);
-                turn = 1;
                 time = setTime;
                 countTime = 0.0f;
                 count++;
