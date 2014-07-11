@@ -37,7 +37,7 @@ public class ButtonLightning : TouchButtonLogic {
     }
 
     void Start() {
-        bullets.GetComponent<Bullets>().setBullets(1);
+        bullets.GetComponent<Bullets>().setBullets(0);
         roulet.SetActive(false);
         buttonRotate.SetActive(false);
 		findNumber = false;
