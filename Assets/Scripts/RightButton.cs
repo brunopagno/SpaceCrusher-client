@@ -3,27 +3,14 @@ using System.Collections;
 
 public class RightButton : TouchButtonLogic {
 
-    public GUITexture nave;
-    public Texture normalTexture;
-    public Texture pressedTexture;
-    public GameObject communication;
-    public float speed = 0.5f;
+    public Ship ship;
 
     void OnTouchBegan() {
-        this.guiTexture.texture = pressedTexture;
+        ship.MoveRight = true;
     }
 
     void OnTouchEnded() {
-        this.guiTexture.texture = normalTexture;
+        ship.MoveRight = false;
     }
 
-    void OnTouchStationary() {
-        float x = nave.transform.position.x + (speed * Time.deltaTime);
-        if (x > 1)
-            x = 1;
-        nave.transform.position = new Vector3(x,
-                                        nave.transform.position.y,
-                                        nave.transform.position.z);
-        communication.GetComponent<Communication>().SendPosition(nave.transform.position.x.ToString());
-    }
 }
