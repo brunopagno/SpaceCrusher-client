@@ -5,11 +5,11 @@ public class LeftButton : TouchBehaviour {
 
     public Ship ship;
 
-    void OnTouchBegin() {
+    public override void OnTouchBegin(Touch touch) {
         ship.MoveLeft = true;
     }
 
-    void OnTouchEnd() {
+    public override void OnTouchEnd(Touch touch) {
         ship.MoveLeft = false;
     }
 

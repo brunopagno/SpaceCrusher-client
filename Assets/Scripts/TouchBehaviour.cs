@@ -5,14 +5,17 @@ public abstract class TouchBehaviour : MonoBehaviour {
 
     private bool began = false;
 
-    void OnTouchBegin(Touch touch) { }
-    void OnTouchStay(Touch touch) { }
-    void OnTouchMove(Touch touch) { }
-    void OnTouchEnd(Touch touch) { }
+    virtual public void OnTouchBegin(Touch touch) { }
+    virtual public void OnTouchStay(Touch touch) { }
+    virtual public void OnTouchMove(Touch touch) { }
+    virtual public void OnTouchEnd(Touch touch) { }
 
     void Update() {
+        if (Input.touchCount > 0) {
+            Debug.Log("OH HERO");
+        }
         foreach (Touch touch in Input.touches) {
-            if (GetComponent<BoxCollider2D>().OverlapPoint(touch.position)) {
+            if (GetComponent<BoxCollider2D>().OverlapPoint(Camera.main.ScreenToWorldPoint(touch.position))) {
                 if (touch.phase == TouchPhase.Began) {
                     OnTouchBegin(touch);
                     began = true;

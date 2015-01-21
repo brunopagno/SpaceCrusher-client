@@ -5,11 +5,11 @@ public class RightButton : TouchBehaviour {
 
     public Ship ship;
 
-    void OnTouchBegin() {
+    public override void OnTouchBegin(Touch touch) {
         ship.MoveRight = true;
     }
 
-    void OnTouchEnd() {
+    public override void OnTouchEnd(Touch touch) {
         ship.MoveRight = false;
     }
 
