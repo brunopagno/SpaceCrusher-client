@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Life : MonoBehaviour {
+public class Life : TouchBehaviour {
 
 	private int life = 3;
 	public AudioClip sound;

@@ -4,7 +4,7 @@ using System.Collections;
 public class Ship : MonoBehaviour {
 
     public Communication communication;
-    public float speed = 1;
+    public float speed = 3;
     public bool MoveRight { get; set; }
     public bool MoveLeft { get; set; }
 

@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class RightButton : TouchButtonLogic {
+public class RightButton : TouchBehaviour {
 
     public Ship ship;
 
-    void OnTouchBegan() {
+    void OnTouchBegin() {
         ship.MoveRight = true;
     }
 
-    void OnTouchEnded() {
+    void OnTouchEnd() {
         ship.MoveRight = false;
     }
 

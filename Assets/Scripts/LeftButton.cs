@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LeftButton : TouchButtonLogic {
+public class LeftButton : TouchBehaviour {
 
     public Ship ship;
 
-    void OnTouchBegan() {
+    void OnTouchBegin() {
         ship.MoveLeft = true;
     }
 
-    void OnTouchEnded() {
+    void OnTouchEnd() {
         ship.MoveLeft = false;
     }
+
 }
