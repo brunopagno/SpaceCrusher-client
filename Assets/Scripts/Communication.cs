@@ -10,13 +10,8 @@ public class Communication : MonoBehaviour {
 
     public GameObject ship;
 
-    private bool isActive;
-    public bool IsActive {
-        get { return isActive; }
-    }
-
     private bool gameStarted = false;
-    private bool connected = false;
+    public bool connected = false;
 
     void Awake() {
         DontDestroyOnLoad(transform.gameObject);
@@ -35,7 +30,6 @@ public class Communication : MonoBehaviour {
     private void JoinServer(HostData hostData) {
         Network.Connect(hostData);
         connected = true;
-        isActive = true;
     }
 
     void OnFailedToConnect(NetworkConnectionError error) {
@@ -74,6 +68,11 @@ public class Communication : MonoBehaviour {
     #endregion
 
     #region RPC In
+
+    [RPC]
+    void RPCConnect(string info) {
+        ProcessMessageIn(info);
+    }
 
     [RPC]
     void SetBulletsGun2(string _message) {
@@ -210,6 +209,9 @@ public class Communication : MonoBehaviour {
                 }
             }
         }
+        if (!string.IsNullOrEmpty(PID)) {
+            GUILayout.Label("My id is: " + PID);
+        }
     }
 
     void ProcessMessageIn(string _message) {
@@ -232,7 +234,7 @@ public class Communication : MonoBehaviour {
                     color = Color.cyan; break;
             }
             if (ship != null) {
-                ship.GetComponent<SpriteRenderer>().color = color;
+                ship.GetComponent<SpriteRenderer>().color = color; // TODO this may not be working
             }
         }
     }
