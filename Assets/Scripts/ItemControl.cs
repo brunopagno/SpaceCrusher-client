@@ -3,12 +3,18 @@ using System.Collections;
 
 public class ItemControl : TouchBehaviour {
 
+    private Vector2 startPosition;
+
     public GameObject communication;
     public GUIText label;
-    public int amount;
-
-    private Vector2 startPosition;
-    private bool started = false;
+    private int amount;
+    public int Amount {
+        get { return this.amount; }
+        set {
+            this.amount = value;
+            this.label.text = amount.ToString();
+        }
+    }
 
     public void DoActivate() {
         if (amount > 0) {
@@ -24,9 +30,6 @@ public class ItemControl : TouchBehaviour {
 
     public override void OnTouchBegin(Touch touch) {
         startPosition = Input.GetTouch(0).position;
-        started = true;
-
-        label.text = "x" + amount++;
     }
 
     public override void OnTouchEnd(Touch touch) {
