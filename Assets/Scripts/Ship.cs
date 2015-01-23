@@ -16,7 +16,9 @@ public class Ship : MonoBehaviour {
         transform.position = new Vector3(transform.position.x + movement,
                                          transform.position.y,
                                          transform.position.z);
-        communication.GetComponent<Communication>().SendPosition(transform.position.x.ToString());
+
+        float pos = transform.position.x / Screen.width; // convert to percentual portion of screen before sending
+        communication.GetComponent<Communication>().SendPosition(pos.ToString());
 	}
 
 }
