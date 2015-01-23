@@ -11,9 +11,6 @@ public abstract class TouchBehaviour : MonoBehaviour {
     virtual public void OnTouchEnd(Touch touch) { }
 
     void Update() {
-        if (Input.touchCount > 0) {
-            Debug.Log("OH HERO");
-        }
         foreach (Touch touch in Input.touches) {
             if (GetComponent<BoxCollider2D>().OverlapPoint(Camera.main.ScreenToWorldPoint(touch.position))) {
                 if (touch.phase == TouchPhase.Began) {
