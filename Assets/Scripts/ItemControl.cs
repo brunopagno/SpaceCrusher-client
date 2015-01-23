@@ -3,8 +3,6 @@ using System.Collections;
 
 public class ItemControl : TouchBehaviour {
 
-    private Vector2 startPosition;
-
     public GameObject communication;
     public GUIText label;
     private int amount;
@@ -23,10 +21,6 @@ public class ItemControl : TouchBehaviour {
     }
 
     public override void OnTouchBegin(Touch touch) {
-        startPosition = Input.GetTouch(0).position;
-    }
-
-    public override void OnTouchEnd(Touch touch) {
         this.DoActivate();
     }
 
