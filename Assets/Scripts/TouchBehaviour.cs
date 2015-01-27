@@ -4,6 +4,7 @@ using System.Collections;
 public abstract class TouchBehaviour : MonoBehaviour {
 
     private bool began = false;
+    private int fingerId = -1;
 
     virtual public void OnTouchBegin(Touch touch) { }
     virtual public void OnTouchStay(Touch touch) { }
@@ -16,9 +17,10 @@ public abstract class TouchBehaviour : MonoBehaviour {
                 if (touch.phase == TouchPhase.Began) {
                     OnTouchBegin(touch);
                     began = true;
+                    fingerId = touch.fingerId;
                 }
             }
-            if (began) {
+            if (began && fingerId == touch.fingerId) {
                 switch (touch.phase) {
                     case TouchPhase.Stationary:
                         OnTouchStay(touch);
