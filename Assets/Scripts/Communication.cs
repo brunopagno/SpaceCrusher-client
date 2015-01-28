@@ -82,22 +82,8 @@ public class Communication : MonoBehaviour {
             if (destPID == PID) {
                 int bullets;
                 int.TryParse(_message.Split(':')[1], out bullets);
-                GameObject bulletsGun2Text = GameObject.FindGameObjectWithTag("bulletsGun2");
-                bulletsGun2Text.GetComponent<ItemControl>().Amount = bullets;
-            }
-        }
-    }
-
-    [RPC]
-    void SetGun2WithSound(string _message) {
-        Match m = Regex.Match(_message, "\\d*:\\d*");
-        if (m.Success) {
-            string destPID = _message.Split(':')[0];
-            if (destPID == PID) {
-                int bullets;
-                int.TryParse(_message.Split(':')[1], out bullets);
-                GameObject bulletsGun2Text = GameObject.FindGameObjectWithTag("bulletsGun2");
-                bulletsGun2Text.GetComponent<ItemControl>().Amount = bullets;
+                GameObject bulletsGun2 = GameObject.FindGameObjectWithTag("gun2");
+                bulletsGun2.GetComponent<ItemControl>().Amount = bullets;
             }
         }
     }
@@ -110,22 +96,8 @@ public class Communication : MonoBehaviour {
             if (destPID == PID) {
                 int bullets;
                 int.TryParse(_message.Split(':')[1], out bullets);
-                GameObject bulletsGun3Text = GameObject.FindGameObjectWithTag("bulletsGun3");
-                bulletsGun3Text.GetComponent<ItemControl>().Amount = bullets;
-            }
-        }
-    }
-
-    [RPC]
-    void SetGun3WithSound(string _message) {
-        Match m = Regex.Match(_message, "\\d*:\\d*");
-        if (m.Success) {
-            string destPID = _message.Split(':')[0];
-            if (destPID == PID) {
-                int bullets;
-                int.TryParse(_message.Split(':')[1], out bullets);
-                GameObject bulletsGun3Text = GameObject.FindGameObjectWithTag("bulletsGun3");
-                bulletsGun3Text.GetComponent<ItemControl>().Amount = bullets;
+                GameObject bulletsGun3 = GameObject.FindGameObjectWithTag("gun3");
+                bulletsGun3.GetComponent<ItemControl>().Amount = bullets;
             }
         }
     }
@@ -138,8 +110,8 @@ public class Communication : MonoBehaviour {
             if (destPID == PID) {
                 int bullets;
                 int.TryParse(_message.Split(':')[1], out bullets);
-                GameObject bulletsSpecialText = GameObject.FindGameObjectWithTag("bulletsSpecial");
-                bulletsSpecialText.GetComponent<ItemControl>().Amount = bullets;
+                GameObject bulletsSpecial = GameObject.FindGameObjectWithTag("gunSpecial");
+                bulletsSpecial.GetComponent<ItemControl>().Amount = bullets;
             }
         }
     }
@@ -160,20 +132,6 @@ public class Communication : MonoBehaviour {
 
     [RPC]
     void SetLife(string _message) {
-        Match m = Regex.Match(_message, "\\d*:\\d*");
-        if (m.Success) {
-            string destPID = _message.Split(':')[0];
-            if (destPID == PID) {
-                int life;
-                int.TryParse(_message.Split(':')[1], out life);
-                GameObject lifeText = GameObject.FindGameObjectWithTag("life");
-                lifeText.GetComponent<ItemControl>().Amount = life;
-            }
-        }
-    }
-
-    [RPC]
-    void SetLifeWithSound(string _message) {
         Match m = Regex.Match(_message, "\\d*:\\d*");
         if (m.Success) {
             string destPID = _message.Split(':')[0];
