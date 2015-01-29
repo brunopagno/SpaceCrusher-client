@@ -4,6 +4,7 @@ using System.Collections;
 public class Ship : MonoBehaviour {
 
     public Communication communication;
+    private float originalSpeed;
     public float speed = 3;
     public bool MoveRight { get; set; }
     public bool MoveLeft { get; set; }
@@ -14,6 +15,7 @@ public class Ship : MonoBehaviour {
     void Start() {
         _height = Camera.main.orthographicSize * 2;
         _width = _height * Camera.main.aspect;
+        originalSpeed = speed;
     }
 
     void Update() {
@@ -37,4 +39,12 @@ public class Ship : MonoBehaviour {
         }
     }
 
+    internal void SpeedReduction(bool p) {
+        if (p) {
+            originalSpeed = speed;
+            speed = speed / 2;
+        } else {
+            speed = originalSpeed;
+        }
+    }
 }

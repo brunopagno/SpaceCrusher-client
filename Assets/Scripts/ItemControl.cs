@@ -10,7 +10,7 @@ public class ItemControl : TouchBehaviour {
         get { return this.amount; }
         set {
             this.amount = value;
-            this.label.text = amount.ToString();
+            this.label.text = amount.ToString() + "x";
         }
     }
 
@@ -23,5 +23,4 @@ public class ItemControl : TouchBehaviour {
     public override void OnTouchBegin(Touch touch) {
         this.DoActivate();
     }
-
 }

@@ -37,7 +37,7 @@ public class Communication : MonoBehaviour {
     }
 
     #region RPC Out
-    
+
     [RPC]
     public void SyncPosition(string _position) {
         string message = string.Format("{0}:{1}", PID, _position);
@@ -141,6 +141,15 @@ public class Communication : MonoBehaviour {
                 GameObject lifeText = GameObject.FindGameObjectWithTag("life");
                 lifeText.GetComponent<ItemControl>().Amount = life;
             }
+        }
+    }
+
+    [RPC]
+    public void SpeedReduction(string message) {
+        string[] msg = message.Split(':');
+        if (msg[0] == PID) {
+            bool reduce = msg[1].Equals("yes");
+            ship.GetComponent<Ship>().SpeedReduction(reduce);
         }
     }
 
