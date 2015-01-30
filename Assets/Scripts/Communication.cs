@@ -18,6 +18,10 @@ public class Communication : MonoBehaviour {
     }
 
     private void RefreshHostList() {
+        // /* Comente se não for usar master server local
+        MasterServer.ipAddress = "143.54.13.238";
+        MasterServer.port = 23466;
+        // */
         MasterServer.RequestHostList(TYPE_NAME);
     }
 
