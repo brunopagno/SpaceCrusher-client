@@ -143,7 +143,7 @@ public class Communication : MonoBehaviour {
                 int life;
                 int.TryParse(_message.Split(':')[1], out life);
                 GameObject lifeText = GameObject.FindGameObjectWithTag("life");
-                lifeText.GetComponent<ItemControl>().Amount = life;
+                lifeText.GetComponent<LabelControl>().Amount = life;
             }
         }
     }
