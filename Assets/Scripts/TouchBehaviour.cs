@@ -17,6 +17,10 @@ public abstract class TouchBehaviour : MonoBehaviour {
         this.fingerId = -1;
     }
 
+    void Start() {
+        ResetTouch();
+    }
+
     void Update() {
         foreach (Touch touch in Input.touches) {
             if (GetComponent<BoxCollider2D>().OverlapPoint(Camera.main.ScreenToWorldPoint(touch.position))) {

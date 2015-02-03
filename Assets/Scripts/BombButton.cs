@@ -7,7 +7,7 @@ public class BombButton : ItemControl {
     public GameObject Ship;
     public GameObject LaunchButton;
 
-    public override void OnTouchEnd(Touch touch) {
+    public override void OnTouchBegin(Touch touch) {
         if (this.DoActivate()) {
             this.DoActivateBomb();
         }

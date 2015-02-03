@@ -55,11 +55,10 @@ public class Communication : MonoBehaviour {
     }
 
     [RPC]
-    public void LaunchBomb() {
+    public void LaunchBomb(string msg) {
         string message = string.Format("{0}", PID);
         networkView.RPC("LaunchBomb", RPCMode.Server, message);
     }
-
 
     #region APIcompleters
 
@@ -122,7 +121,7 @@ public class Communication : MonoBehaviour {
                 int bullets;
                 int.TryParse(_message.Split(':')[1], out bullets);
                 GameObject bulletsSpecial = GameObject.FindGameObjectWithTag("gunSpecial");
-                bulletsSpecial.GetComponent<ItemControl>().Amount = bullets;
+                bulletsSpecial.GetComponent<BombButton>().Amount = bullets;
             }
         }
     }
