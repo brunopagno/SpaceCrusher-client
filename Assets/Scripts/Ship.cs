@@ -4,6 +4,9 @@ using System.Collections;
 public class Ship : MonoBehaviour {
 
     public Communication communication;
+    public Sprite shipSprite;
+    public Sprite bombSprite;
+
     private float originalSpeed;
     public float speed = 3;
     public bool MoveRight { get; set; }
@@ -11,11 +14,38 @@ public class Ship : MonoBehaviour {
 
     private float _height;
     private float _width;
+    private Color originalColor;
 
     void Start() {
         _height = Camera.main.orthographicSize * 2;
         _width = _height * Camera.main.aspect;
         originalSpeed = speed;
+    }
+
+    public void SetShipSprite()
+    {
+        this.GetComponent<SpriteRenderer>().sprite = shipSprite;
+    }
+
+    public void SetBombSprite()
+    {
+        this.GetComponent<SpriteRenderer>().sprite = bombSprite;
+    }
+
+    public void SetColor(Color _color)
+    {
+        this.GetComponent<SpriteRenderer>().color = _color;
+    }
+
+    public void SetOriginalColor(Color _color)
+    {
+        this.GetComponent<SpriteRenderer>().color = _color;
+        originalColor = _color;
+    }
+
+    public void SetOriginalColor()
+    {
+        this.GetComponent<SpriteRenderer>().color = originalColor;
     }
 
     void Update() {
