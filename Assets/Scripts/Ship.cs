@@ -16,10 +16,14 @@ public class Ship : MonoBehaviour {
     private float _width;
     private Color originalColor;
 
+    private float RPCFreq = 0.05f;
+    private float antiRPCSpamTimer;
+
     void Start() {
         _height = Camera.main.orthographicSize * 2;
         _width = _height * Camera.main.aspect;
         originalSpeed = speed;
+        antiRPCSpamTimer = RPCFreq;
     }
 
     public void SetShipSprite()
@@ -63,9 +67,11 @@ public class Ship : MonoBehaviour {
 
         transform.position = new Vector3(result, transform.position.y, transform.position.z);
 
-        if (communication.connected) {
+        antiRPCSpamTimer -= Time.deltaTime;
+        if (communication.connected && antiRPCSpamTimer < 0) {
             float pos = transform.position.x / _width + .5f; // convert to percentual portion of screen before sending
             communication.GetComponent<Communication>().SyncPosition(pos.ToString());
+            antiRPCSpamTimer = RPCFreq;
         }
     }
 
