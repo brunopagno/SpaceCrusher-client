@@ -14,10 +14,12 @@ public class ItemControl : TouchBehaviour {
         }
     }
 
-    public void DoActivate() {
+    public bool DoActivate() {
         if (amount > 0) {
             communication.GetComponent<Communication>().SyncChangedItem(this.gameObject.tag);
+            return true;
         }
+        return false;
     }
 
     public override void OnTouchBegin(Touch touch) {
