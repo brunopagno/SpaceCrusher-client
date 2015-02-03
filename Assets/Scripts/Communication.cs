@@ -54,6 +54,13 @@ public class Communication : MonoBehaviour {
         networkView.RPC("SyncChangedItem", RPCMode.Server, message);
     }
 
+    [RPC]
+    public void LaunchBomb() {
+        string message = string.Format("{0}", PID);
+        networkView.RPC("LaunchBomb", RPCMode.Server, message);
+    }
+
+
     #region APIcompleters
 
     // Métodos que só servem para API do Unity funcionar. Se eles não existirem acontece erro.
@@ -205,7 +212,7 @@ public class Communication : MonoBehaviour {
                     color = Color.cyan; break;
             }
             if (ship != null) {
-                ship.GetComponent<SpriteRenderer>().color = color; // TODO this may not be working
+                ship.GetComponent<Ship>().SetOriginalColor(color);
             }
         }
     }
