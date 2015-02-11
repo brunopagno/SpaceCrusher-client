@@ -13,6 +13,8 @@ public class Communication : MonoBehaviour {
     private bool gameStarted = false;
     public bool connected = false;
 
+    public bool vibractionActive = true;
+
     void Awake() {
         DontDestroyOnLoad(transform.gameObject);
     }
@@ -164,6 +166,22 @@ public class Communication : MonoBehaviour {
     }
 
     [RPC]
+    public void InitialConfig(string message) {
+        string[] msg = message.Split('|');
+        foreach (string command in msg) {
+            if (command.StartsWith("vibration")) {
+                string param = command.Split(':')[1];
+                vibractionActive = param.Equals("true");
+            } else if (command.StartsWith("button_size")) {
+                string param = command.Split(':')[1];
+                float bs = 1;
+                float.TryParse(param, out bs);
+                SetButtons(bs);
+            }
+        }
+    }
+
+    [RPC]
     void RPCStart(string nothing) { }
 
     #endregion
@@ -214,6 +232,15 @@ public class Communication : MonoBehaviour {
                 ship.GetComponent<Ship>().SetOriginalColor(color);
             }
         }
+    }
+
+    private void SetButtons(float size) {
+        GameObject.Find("Weapon2").transform.localScale = new Vector3(size, size, 1);
+        GameObject.Find("Weapon3").transform.localScale = new Vector3(size, size, 1);
+        GameObject.Find("Lightning").transform.localScale = new Vector3(size, size, 1);
+        GameObject.Find("ButtonRight").transform.localScale = new Vector3(size, size, 1);
+        GameObject.Find("ButtonLeft").transform.localScale = new Vector3(size, size, 1);
+        GameObject.Find("LaunchBomb").transform.localScale = new Vector3(size, size, 1);
     }
 
 }
