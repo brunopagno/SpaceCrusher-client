@@ -57,6 +57,12 @@ public class Communication : MonoBehaviour {
     }
 
     [RPC]
+    public void MissedClicks(string msg) {
+        string message = string.Format("{0}:{1}", PID, msg);
+        networkView.RPC("MissedClicks", RPCMode.Server, message);
+    }
+
+    [RPC]
     public void LaunchBomb(string msg) {
         string message = string.Format("{0}", PID);
         networkView.RPC("LaunchBomb", RPCMode.Server, message);
@@ -192,7 +198,12 @@ public class Communication : MonoBehaviour {
         if (!string.IsNullOrEmpty(PID)) {
             GUILayout.Label("My id is: " + PID);
         }
+
+        //foreach (TouchBehaviour tb in GameObject.FindObjectsOfType<TouchBehaviour>()) {
+        //    GUILayout.Label(tb.name + "=>" + tb.counter);
+        //}
     }
+
 
     void ProcessMessageIn(string _message) {
         Match m = Regex.Match(_message, "PID:\\d*");
