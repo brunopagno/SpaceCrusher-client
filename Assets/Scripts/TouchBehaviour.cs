@@ -5,6 +5,7 @@ public abstract class TouchBehaviour : MonoBehaviour {
 
     private bool began = false;
     private int fingerId = -1;
+    public int counter = 0;
 
     virtual public void OnTouchBegin(Touch touch) { }
     virtual public void OnTouchStay(Touch touch) { }
@@ -25,6 +26,7 @@ public abstract class TouchBehaviour : MonoBehaviour {
         foreach (Touch touch in Input.touches) {
             if (GetComponent<BoxCollider2D>().OverlapPoint(Camera.main.ScreenToWorldPoint(touch.position))) {
                 if (touch.phase == TouchPhase.Began) {
+                    counter++;
                     OnTouchBegin(touch);
                     began = true;
                     fingerId = touch.fingerId;
