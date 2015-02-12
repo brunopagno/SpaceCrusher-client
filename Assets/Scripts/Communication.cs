@@ -62,21 +62,6 @@ public class Communication : MonoBehaviour {
         networkView.RPC("LaunchBomb", RPCMode.Server, message);
     }
 
-    #region APIcompleters
-
-    // Métodos que só servem para API do Unity funcionar. Se eles não existirem acontece erro.
-
-    [RPC]
-    void MovePlayer(string _message) { }
-    [RPC]
-    void ChangeGun(string _message) { }
-    [RPC]
-    void PassarArminhaProAmiguinho(string _message) { }
-    [RPC]
-    void PassarVidaProAmiguinho(string _message) { }
-
-    #endregion
-
     #endregion
 
     #region RPC In
