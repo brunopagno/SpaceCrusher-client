@@ -16,6 +16,9 @@ public class BombButton : ItemControl {
     private void DoActivateBomb() {
         /* ativa o modo bomba */
         // esconder botões
+        // When controller objects are set to false the game cannot update the amount of bombs,
+        // so this is an allowed gambi =D
+        this.Amount--;
         ControllerObjects.SetActive(false);
 
         // mudar textura da elipse para bomba (catar imagem no google =D)
