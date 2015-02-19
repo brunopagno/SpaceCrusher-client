@@ -162,7 +162,7 @@ public class Communication : MonoBehaviour {
         foreach (string command in msg) {
             if (command.StartsWith("vibration")) {
                 string param = command.Split(':')[1];
-                vibractionActive = param.Equals("true");
+                vibractionActive = param.Equals("true", System.StringComparison.InvariantCultureIgnoreCase);
             } else if (command.StartsWith("button_size")) {
                 string param = command.Split(':')[1];
                 float bs = 1;
