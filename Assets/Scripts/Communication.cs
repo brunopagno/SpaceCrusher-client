@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Text.RegularExpressions;
+using System.IO;
 
 public class Communication : MonoBehaviour {
 
@@ -14,16 +15,21 @@ public class Communication : MonoBehaviour {
     public bool connected = false;
 
     public bool vibractionActive = true;
+    private string ipAddress = "0.0.0.0";
 
     void Awake() {
         DontDestroyOnLoad(transform.gameObject);
+        if (File.Exists(Application.persistentDataPath + "/ipaddr.txt")) {
+            string ip = File.ReadAllText(Application.persistentDataPath + "/ipaddr.txt");
+            if (ip != null) {
+                ipAddress = ip;
+            }
+        }
     }
 
     private void RefreshHostList() {
-        // /* Comente se não for usar master server local
-        MasterServer.ipAddress = "143.54.13.238";
+        MasterServer.ipAddress = ipAddress;
         MasterServer.port = 23466;
-        // */
         MasterServer.RequestHostList(TYPE_NAME);
     }
 
@@ -36,6 +42,11 @@ public class Communication : MonoBehaviour {
     private void JoinServer(HostData hostData) {
         Network.Connect(hostData);
         connected = true;
+
+        StreamWriter writer = File.CreateText(Application.persistentDataPath + "/ipaddr.txt");
+        writer.Write(ipAddress);
+        writer.Flush();
+        writer.Close();
     }
 
     void OnFailedToConnect(NetworkConnectionError error) {
@@ -179,6 +190,7 @@ public class Communication : MonoBehaviour {
 
     void OnGUI() {
         if (!gameStarted) {
+            ipAddress = GUI.TextField(new Rect(Screen.width - 120, 10, 110, 30), ipAddress);
             if (GUI.Button(new Rect(10, 10, 250, 100), "Refresh Hosts")) {
                 RefreshHostList();
             }
@@ -203,7 +215,6 @@ public class Communication : MonoBehaviour {
         //    GUILayout.Label(tb.name + "=>" + tb.counter);
         //}
     }
-
 
     void ProcessMessageIn(string _message) {
         Match m = Regex.Match(_message, "PID:\\d*");
@@ -238,5 +249,4 @@ public class Communication : MonoBehaviour {
         GameObject.Find("ButtonLeft").transform.localScale = new Vector3(size, size, 1);
         GameObject.Find("LaunchBomb").transform.localScale = new Vector3(size, size, 1);
     }
-
 }
