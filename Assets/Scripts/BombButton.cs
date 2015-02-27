@@ -6,10 +6,14 @@ public class BombButton : ItemControl {
     public GameObject ControllerObjects;
     public GameObject Ship;
     public GameObject LaunchButton;
+    public bool freeBomb = true;
 
     public override void OnTouchBegin(Touch touch) {
-        if (this.DoActivate()) {
-            this.DoActivateBomb();
+        if (freeBomb) {
+            if (this.DoActivate()) {
+                this.DoActivateBomb();
+                freeBomb = false;
+            }
         }
     }
 

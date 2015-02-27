@@ -131,6 +131,14 @@ public class Communication : MonoBehaviour {
     }
 
     [RPC]
+    public void FreeBombMode(string message) {
+        if (PID.Equals(message)) {
+            GameObject bulletsSpecial = GameObject.FindGameObjectWithTag("gunSpecial");
+            bulletsSpecial.GetComponent<BombButton>().freeBomb = true;
+        }
+    }
+
+    [RPC]
     public void SyncScore(string _message) {
         Match m = Regex.Match(_message, "\\d*:\\d*");
         if (m.Success) {
